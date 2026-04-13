@@ -1,66 +1,58 @@
 # GoLearn Education API
 
-GoLearn Remote Education Platform API, developed with Go, Gin, SQLite, GORM, and JWT authentication. Clean architecture with RBAC (Role-Based Access Control) support, Quiz systems, Progress tracking, and WebSockets functionality.
+GoLearn Uzaktan Eğitim Platformu API, Go, Gin, SQLite, GORM ve JWT kimlik doğrulama ile geliştirilmiştir. Temiz mimari (clean architecture), RBAC (Rol Tabanlı Erişim Kontrolü), Sınav (Quiz) sistemleri, Gelişim takibi ve WebSockets işlevlerini destekler.
 
-## Features
-- **User Authentication**: JWT-based login/register (Student/Teacher roles)
-- **Role-Based Access Control**: Middleware to authorize users by roles.
-- **Courses & Lessons**: CRUD operations for interactive courses.
-- **Quizzes**: Real-time quiz creation and evaluation logic.
-- **WebSockets**: Real-time chat & notifications module.
-- **Dockerized**: Easy-to-deploy multi-container docker build.
-- **Rate-Limiting**: IP-based rate limiting per user connection.
-- **Swagger Documentation**: Accessible over (`/swagger/index.html`).
+### Öğrenci Bilgileri
+- **Ad Soyad:** Muhammed Furkan Güngördü
+- **Numara:** 24080410024
 
-## Getting Started
+---
 
-### Prerequisites
-- Go 1.21+
-- Docker & Docker Compose (Optional)
+## 🚀 Geliştirme Süreci (13 Adımlık Plan)
 
-### Run with Docker (Recommended)
+Bu proje baştan sona aşağıdaki 13 adım eksiksiz takip edilerek kurulmuştur:
+
+1. **Proje Kurulumu ve Modeller** - Go modüllerinin yüklenmesi, klasör yapısı (config, models vb.)
+2. **Veritabanı Entegrasyonu** - Saf Go (Pure-Go) destekli `glebarez/sqlite` ve GORM kullanılarak db bağlantısı sağlandı.
+3. **Roller ve Veri Modelleri** - DTO'lar, Öğrenci/Öğretmen gibi user rolleri sisteme işlendi.
+4. **Kimlik Doğrulama (Auth JWT)** - `Register` ve `Login` işlemleri ve güvenli Token algoritması.
+5. **Ara Katman (Middleware)** - Request Limitleri (RateLimiter), Auth/Roll doğrulama mekanizmaları.
+6. **Kurs Yönetimi (Courses)** - Öğretmenlerin ders açabileceği, öğrencilerin kaydolabileceği uç noktalar.
+7. **Ders Yönetimi (Lessons)** - Kursa bağlı video veya metin materyalleri yönetimi.
+8. **Sınav Sistemi (Quizzes)** - Öğretmenlerin sınav hazırlama ve öğrencilerin çözümlerini gönderme özelliği.
+9. **Gelişim Takibi (Progress)** - Öğrencilerin izlediği dersleri ilerlemesi ile kaydetme yeteneği.
+10. **Canlı İletişim (WebSockets)** - Sistem odaları ve kullanıcılar arası canlı etkileşim entegresi.
+11. **Konteyner (Docker)** - `Dockerfile` ve `docker-compose.yml` ayarları yapıldı.
+12. **API Dokümantasyonu** - Bütün endpoint'ler için `Swagger` kuruldu ve kod yorumları ile üretildi.
+13. **Testler ve İyileştirmeler** - Gerekli `_test.go` dosyalarının yazılması, versiyon kontrol (Git) ve son pürüzlerin temizlenmesi.
+
+---
+
+## 🛠 Kullanılan Teknolojiler
+
+- **Dil:** Go 1.21+
+- **Web Framework:** Gin
+- **Veritabanı ve ORM:** SQLite (`github.com/glebarez/sqlite`) & GORM
+- **Güvenlik ve İletişim:** JWT (JSON Web Tokens), Gorilla WebSockets
+- **Dokümantasyon:** Swagger (go-swagger)
+
+## 📌 Hızlı Başlangıç
+
+### Ön Gereksinimler
+- Go 1.21+ (CGO gerekmez)
+- İsteğe Bağlı: Docker Desktop
+
+### 1- Docker İle Çalıştırma (Önerilen)
+Dizin içerisinde sağ tık yapıp terminali açarak şu komutu uygulayın:
 ```bash
 docker-compose up --build
 ```
-The server will be running at `http://localhost:8080`.
+Sunucu direkt olarak `http://localhost:8080/swagger/index.html` üzerinden aktif olacaktır.
 
-### Run Locally (Without Docker)
-1. Install dependencies:
+### 2- Lokal (Docker Olmadan) Çalıştırma
+Projeyi kendi cihazınızda derlemek için:
 ```bash
 go mod tidy
-```
-2. Build and run:
-```bash
 go run main.go
 ```
-
-## API Endpoints (Quick Overview)
-
-### Auth
-- `POST /api/v1/auth/register` - Create account
-- `POST /api/v1/auth/login` - Authenticate & get JWT
-
-### Courses
-- `GET /api/v1/courses` - List courses
-- `POST /api/v1/courses` - Create course (Teacher only)
-- `POST /api/v1/courses/:id/enroll` - Enroll in a course (Student only)
-
-### Lessons
-- `GET /api/v1/courses/:id/lessons` - List lessons
-- `POST /api/v1/courses/:id/lessons` - Add a lesson (Teacher only)
-
-### Quizzes
-- `POST /api/v1/courses/:id/quizzes` - Create a quiz
-- `POST /api/v1/courses/:id/quizzes/:quizId/submit` - Submit quiz answers
-
-### WebSockets
-- `GET /api/v1/ws/:roomId` - Connect to chat room (Needs Auth header)
-
-## Project Structure
-- `main.go`: API Entry point
-- `config/`: Configuration parsing & env variable bindings
-- `database/`: Database connectivity
-- `models/`: GORM objects & Data Transfer Objects (DTO)
-- `handlers/`: Route controllers & logic mapping
-- `middleware/`: HTTP security chains
-- `websocket/`: Pub/Sub socket handling
+API arayüzü ve dökümantasyon şu linkte başlayacaktır: [http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
