@@ -1,0 +1,11 @@
+# Binaries
+tmp_build
+*.exe
+golearn
+
+# Database
+*.db
+*.sqlite
+
+# OS specific
+.DS_Store
